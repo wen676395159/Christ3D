@@ -1,4 +1,6 @@
 ﻿using Christ3D.Domain.Interfaces;
+using Christ3D.Infrastruct.Data.Context;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,39 +10,49 @@ namespace Christ3D.Infrastruct.Data.Repository
 {
     public class Repository<TEntity> : IRepository<TEntity> where TEntity : class
     {
+        protected readonly StudyContext Db;
+        protected readonly DbSet<TEntity> DbSet;
+
+        public Repository(StudyContext context)
+        {
+            Db = context;
+            DbSet = Db.Set<TEntity>();
+        }
+
         public void Add(TEntity obj)
         {
-            throw new NotImplementedException();
+            DbSet.Add(obj);
         }
 
         public void Dispose()
         {
-            throw new NotImplementedException();
+            Db.Dispose();
+            GC.SuppressFinalize(this);
         }
 
         public IQueryable<TEntity> GetAll()
         {
-            throw new NotImplementedException();
+            return DbSet;
         }
 
         public TEntity GetById(Guid id)
         {
-            throw new NotImplementedException();
+            return DbSet.Find(id);
         }
 
         public void Remove(Guid id)
         {
-            throw new NotImplementedException();
+            DbSet.Remove(DbSet.Find(id));
         }
 
         public int SaveChanges()
         {
-            throw new NotImplementedException();
+            return Db.SaveChanges();
         }
 
         public void Update(TEntity obj)
         {
-            throw new NotImplementedException();
+            DbSet.Update(obj);
         }
     }
 }

@@ -8,8 +8,8 @@ namespace Christ3D.Domain.Interfaces
     /// <summary>
     /// customer仓储
     /// </summary>
-    public interface ICustomerRepository:IRepository<Customer>
+    public interface IStudentRepository:IRepository<Student>
     {
-        Customer GetByEmail(string email);
+        Student GetByEmail(string email);
     }
 }
